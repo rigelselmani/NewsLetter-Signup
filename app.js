@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var request = require('request');
 
 const app = express();
+app.set('view engine', 'pug')
 
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({ extended: true }))
@@ -35,15 +36,24 @@ var data={
        headers: {
            "Authorization":"rigel1 28712355893087537b2bb7a726aec18f-us4"
        },
-       body: jsonData
+    //    body: jsonData
    }
    request(options, function(error, response, body){
     if(error){
-        console.log(error);
+        res.sendFile(__dirname+"/failure.html");
     }else{
-        console.log(response.statusCode)
+        if(response.statusCode === 200){
+            res.sendFile(__dirname+"/success.html");
+        }else{
+            console.log(error);
+            res.sendFile(__dirname+"/failure.html")
+        }
     }
    });
+});
+
+app.post("/failure",function(req,res){
+   res.redirect("/");
 });
 
 app.listen("3000",function (){
