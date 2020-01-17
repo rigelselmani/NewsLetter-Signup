@@ -36,7 +36,7 @@ var data={
        headers: {
            "Authorization":"rigel1 28712355893087537b2bb7a726aec18f-us4"
        },
-    //    body: jsonData
+       body: jsonData
    }
    request(options, function(error, response, body){
     if(error){
@@ -45,7 +45,6 @@ var data={
         if(response.statusCode === 200){
             res.sendFile(__dirname+"/success.html");
         }else{
-            console.log(error);
             res.sendFile(__dirname+"/failure.html")
         }
     }
@@ -56,7 +55,7 @@ app.post("/failure",function(req,res){
    res.redirect("/");
 });
 
-app.listen("3000",function (){
+app.listen(process.env.PORT || 3000,function (){
      console.log(`Example app listening on port 3000`)
     })
 
